@@ -138,8 +138,4 @@ export function renderChart(container, records, { pm = false, now = Date.now() }
       show(moves[event.key]);
     }
   };
-  const caption = document.createElement('p');
-  caption.className = 'chart-caption';
-  caption.textContent = `${date.format(start)} – ${date.format(now)} · เวลาไทย`;
-  container.append(caption);
 }

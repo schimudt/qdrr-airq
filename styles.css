@@ -41,7 +41,7 @@ a:hover { text-decoration-thickness: 2px; }
 .chart-panel { min-width: 0; }
 .chart-panel h2 { margin-bottom: 14px; }
 .chart-container { position: relative; width: 100%; min-height: 260px; }
-.chart-container > p:not(.chart-caption) { padding: 70px 16px; text-align: center; color: var(--muted); background: #fff; }
+.chart-container > p { padding: 70px 16px; text-align: center; color: var(--muted); background: #fff; }
 .chart-container svg { display: block; width: 100%; height: auto; overflow: visible; font-family: inherit; }
 .chart-axis { fill: #58616d; font-size: 12px; }
 .chart-grid { stroke: #dce0e5; stroke-width: 1; }
@@ -53,7 +53,6 @@ a:hover { text-decoration-thickness: 2px; }
 .chart-selection { fill: #283c50; stroke: #fff; stroke-width: 2; pointer-events: none; }
 .chart-tooltip { position: absolute; z-index: 1; pointer-events: none; background: #20252b; color: #fff; padding: 9px 12px; font-size: 13px; line-height: 1.5; border-radius: 4px; white-space: nowrap; }
 .chart-tooltip strong { display: block; font-size: 16px; font-weight: 500; }
-.chart-caption { margin-top: 6px; font-size: 13px; color: var(--muted); }
 .reference { border-top: 1px solid var(--border); padding-top: 24px; margin-top: 28px; }
 .reference-heading a { font-size: 14px; }
 .legend { list-style: none; padding: 0; display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); gap: 12px; margin: 18px 0 12px; }
