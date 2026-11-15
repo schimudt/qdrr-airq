@@ -19,7 +19,8 @@ a:hover { text-decoration-thickness: 2px; }
 .page-header { margin-bottom: 28px; align-items: center; }
 .powered-by { display: flex; align-items: center; gap: 10px; font-size: 14px; color: var(--muted); white-space: nowrap; }
 .powered-by img { display: block; width: 161px; height: 22px; }
-.report { padding: 25px 28px; background: var(--quality-color, #e5e7eb); color: var(--quality-ink, #20252b); border: 1px solid transparent; }
+.report { position: relative; isolation: isolate; overflow: hidden; padding: 25px 28px; background: var(--quality-color, #e5e7eb); color: var(--quality-ink, #20252b); border: 1px solid transparent; }
+.report::before { content: ""; position: absolute; inset: 0; z-index: -1; background: url("./assets/qdrr-background.jpg") center 60% / cover no-repeat; filter: grayscale(1); opacity: 0.16; mask-image: linear-gradient(to right, transparent, #000); pointer-events: none; }
 .report h2 { font-size: 18px; font-weight: 600; }
 .report-standard { font-size: 0.8em; font-weight: 400; }
 .category { margin-top: 15px; font-size: clamp(28px, 3.4vw, 43px); font-weight: 600; line-height: 1.4; overflow-wrap: anywhere; }
