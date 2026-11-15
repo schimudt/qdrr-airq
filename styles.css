@@ -19,12 +19,13 @@ a:hover { text-decoration-thickness: 2px; }
 .page-header { margin-bottom: 28px; align-items: center; }
 .powered-by { display: flex; align-items: center; gap: 10px; font-size: 14px; color: var(--muted); white-space: nowrap; }
 .powered-by img { display: block; width: 161px; height: 22px; }
-.report { padding: 25px 28px; background: #fff; border: 1px solid var(--border); border-left: 6px solid var(--quality-color, #8b939d); }
+.report { padding: 25px 28px; background: var(--quality-color, #e5e7eb); color: var(--quality-ink, #20252b); border: 1px solid transparent; }
 .report h2 { font-size: 18px; font-weight: 600; }
 .report-standard { font-size: 0.8em; font-weight: 400; }
 .category { margin-top: 15px; font-size: clamp(28px, 3.4vw, 43px); font-weight: 600; line-height: 1.4; overflow-wrap: anywhere; }
 .assessment-value { margin: 6px 0; font-size: 20px; }
-#assessment-period { color: var(--muted); }
+#assessment-period { color: inherit; }
+.report .data-status { color: inherit; font-weight: 500; }
 .readings { display: grid; grid-template-columns: 1fr 1fr; margin: 26px 0 30px; border-bottom: 1px solid var(--border); }
 .reading { padding: 0 0 23px; }
 .reading + .reading { border-left: 1px solid var(--border); padding-left: 30px; }
@@ -37,13 +38,19 @@ a:hover { text-decoration-thickness: 2px; }
 .charts { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 28px; }
 .chart-panel { min-width: 0; }
 .chart-panel h2 { margin-bottom: 14px; }
-.chart-container { width: 100%; min-height: 260px; }
+.chart-container { position: relative; width: 100%; min-height: 260px; }
 .chart-container > p:not(.chart-caption) { padding: 70px 16px; text-align: center; color: var(--muted); background: #fff; }
 .chart-container svg { display: block; width: 100%; height: auto; overflow: visible; font-family: inherit; }
 .chart-axis { fill: #58616d; font-size: 12px; }
 .chart-grid { stroke: #dce0e5; stroke-width: 1; }
 .chart-line { fill: none; stroke: #283c50; stroke-width: 2; stroke-linejoin: round; stroke-linecap: round; }
 .chart-point { fill: #283c50; }
+.chart-hit-area { fill: transparent; cursor: crosshair; touch-action: pan-y; }
+.chart-hit-area:focus-visible { outline: none; stroke: #245a9c; stroke-width: 2; }
+.chart-crosshair { stroke: #283c50; stroke-width: 1; stroke-dasharray: 4 3; pointer-events: none; }
+.chart-selection { fill: #283c50; stroke: #fff; stroke-width: 2; pointer-events: none; }
+.chart-tooltip { position: absolute; z-index: 1; pointer-events: none; background: #20252b; color: #fff; padding: 9px 12px; font-size: 13px; line-height: 1.5; border-radius: 4px; white-space: nowrap; }
+.chart-tooltip strong { display: block; font-size: 16px; font-weight: 500; }
 .chart-caption { margin-top: 6px; font-size: 13px; color: var(--muted); }
 .reference { border-top: 1px solid var(--border); padding-top: 24px; margin-top: 28px; }
 .reference-heading a { font-size: 14px; }

@@ -1,10 +1,24 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { category, parseReading, normaliseRecords, rollingHour, hourlyEstimate, MINUTE, HOUR } from '../src/quality.js';
+import { BANDS, contrastText, category, parseReading, normaliseRecords, rollingHour, hourlyEstimate, MINUTE, HOUR } from '../src/quality.js';
 
 const start = Date.parse('2026-11-15T02:00:00Z');
 const window = { start, end: start + HOUR };
 const record = (minute, value) => ({ created_at: new Date(start + minute * MINUTE).toISOString(), value });
+
+test('report text has at least 4.5:1 contrast against every European category background', () => {
+  const luminance = hex => {
+    const [r,g,b] = hex.slice(1).match(/../g).map(pair => {
+      const channel = parseInt(pair,16)/255;
+      return channel <= .04045 ? channel/12.92 : ((channel+.055)/1.055)**2.4;
+    });
+    return r*.2126+g*.7152+b*.0722;
+  };
+  for (const band of BANDS) {
+    const background = luminance(band.color), text = luminance(contrastText(band.color));
+    assert.ok((Math.max(background,text)+.05)/(Math.min(background,text)+.05)>=4.5, band.english);
+  }
+});
 
 test('European bands include the exact boundary in the lower category', () => {
   for (const [value, expected] of [[0, 'Good'], [5, 'Good'], [5.001, 'Fair'], [15, 'Fair'], [15.1, 'Moderate'], [50, 'Moderate'], [50.01, 'Poor'], [90, 'Poor'], [90.1, 'Very poor'], [140, 'Very poor'], [140.1, 'Extremely poor']]) {

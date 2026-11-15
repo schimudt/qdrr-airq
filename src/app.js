@@ -1,4 +1,4 @@
-import { BANDS, MINUTE, parseReading, rollingHour, hourlyEstimate } from './quality.js';
+import { BANDS, MINUTE, parseReading, rollingHour, hourlyEstimate, contrastText } from './quality.js';
 import { FEEDS, latest, history, hourRecords } from './api.js';
 import { Poller } from './polling.js';
 import { renderChart } from './charts.js';
@@ -54,7 +54,7 @@ for (const [key, feed] of Object.entries(FEEDS)) {
       if (lastAssessment?.end !== point.time && assessmentJob.failures === 0) assessmentJob.due = 0;
     }
     $(`${key}-value`).textContent = number.format(point.value);
-    $(`${key}-time`).textContent = `บันทึก ${time.format(point.time)} น.`;
+    $(`${key}-time`).textContent = `${time.format(point.time)} น.`;
     $(`${key}-status`).textContent = '';
   }, MINUTE, error => {
     $(`${key}-status`).textContent = errorText(error, !!reading);
@@ -91,7 +91,9 @@ const assessmentJob = poller.add(async () => {
   assessedAt = Date.now();
   $('assessment-period').textContent = `${time.format(result.start).replace(/:\d{2}$/, '')}–${clock.format(result.end)} น.`;
   $('assessment-status').textContent = '';
-  $('report').style.setProperty('--quality-color', result.band?.color ?? '#8b939d');
+  const reportColor = result.band?.color ?? '#e5e7eb';
+  $('report').style.setProperty('--quality-color', reportColor);
+  $('report').style.setProperty('--quality-ink', contrastText(reportColor));
   if (result.band) {
     $('category').textContent = `${result.band.thai} (${result.band.english})`;
     // Extra precision avoids displaying a boundary value beside the next category.
