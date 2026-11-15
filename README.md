@@ -35,6 +35,7 @@ API root: `https://io.adafruit.com/api/v2/srakrn/feeds/`
 | `qdrr-temperature` | Temperature, °C |
 
 - `/data?limit=1`: latest readings, checked every minute.
+- The single latest-update timestamp beneath both readings is the maximum of their last successfully retrieved `created_at` values. Adafruit records unique value changes, so a temperature value can remain current even when its individual change timestamp is older. One available feed is enough to show the shared timestamp; failed refreshes preserve previously retrieved readings.
 - `/data/chart?hours=24`: chart history, checked every five minutes. The API can aggregate history; chart points are the values returned by Adafruit, not hourly category results.
 - `/data?start_time=…&end_time=…&limit=1000`: raw data for the rolling hour ending at the latest valid PM2.5 reading, plus ten minutes before that window. Pagination uses an exposed cursor when available and an `end_time` fallback when CORS hides the Link header. New PM2.5 timestamps trigger an updated assessment after the latest-reading poll; unchanged windows are rechecked at most every five minutes. Assessment failures retain their retry backoff.
 

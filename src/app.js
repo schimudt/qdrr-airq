@@ -29,6 +29,13 @@ function errorText(error, retained = false) {
 }
 
 const poller = new Poller();
+const latestReadings = {};
+function updateTimestamp() {
+  const timestamps = Object.values(latestReadings).map(point => point.time);
+  $('latest-time').textContent = timestamps.length
+    ? `อัปเดตล่าสุด ${time.format(Math.max(...timestamps))} น.`
+    : 'ยังไม่มีเวลาอัปเดตที่ใช้ได้';
+}
 let latestPM = null;
 for (const [key, feed] of Object.entries(FEEDS)) {
   let reading = null;
@@ -49,16 +56,17 @@ for (const [key, feed] of Object.entries(FEEDS)) {
     const point = parseReading(records[0], { pm: key === 'pm' });
     if (!point || point.time > Date.now() + MINUTE) throw new Error('No valid latest reading');
     reading = point;
+    latestReadings[key] = point;
     if (key === 'pm') {
       latestPM = point;
       if (lastAssessment?.end !== point.time && assessmentJob.failures === 0) assessmentJob.due = 0;
     }
     $(`${key}-value`).textContent = number.format(point.value);
-    $(`${key}-time`).textContent = `${time.format(point.time)} น.`;
+    updateTimestamp();
     $(`${key}-status`).textContent = '';
   }, MINUTE, error => {
     $(`${key}-status`).textContent = errorText(error, !!reading);
-    if (!reading) $(`${key}-time`).textContent = 'ยังไม่มีค่าล่าสุดที่ใช้ได้';
+    updateTimestamp();
   });
 
   poller.add(async () => {

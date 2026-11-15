@@ -27,11 +27,12 @@ a:hover { text-decoration-thickness: 2px; }
 #assessment-period { color: inherit; }
 .report .data-status { color: inherit; font-weight: 500; }
 .readings { display: grid; grid-template-columns: 1fr 1fr; margin: 26px 0 30px; border-bottom: 1px solid var(--border); }
-.reading { padding: 0 0 23px; }
+.reading { padding: 0 0 12px; }
 .reading + .reading { border-left: 1px solid var(--border); padding-left: 30px; }
 .reading-value { font-size: clamp(42px, 5vw, 56px); line-height: 1.35; font-weight: 500; font-variant-numeric: tabular-nums; margin: 8px 0 4px; }
 .unit { font-size: 21px; color: var(--muted); font-weight: 400; }
 .timestamp { color: var(--muted); font-size: 14px; }
+#latest-time { grid-column: 1 / -1; padding: 4px 0 20px; }
 .data-status { color: #944013; font-size: 14px; }
 .data-status:empty, .assessment-value:empty { display: none; }
 .data-status:not(:empty) { margin-top: 6px; }
