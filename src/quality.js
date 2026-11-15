@@ -33,9 +33,8 @@ export function normaliseRecords(records, options) {
   return [...unique.values()].sort((a, b) => a.time - b.time);
 }
 
-export function previousHour(now = Date.now()) {
-  // Bangkok is UTC+7 without DST; clock-hour boundaries also fall on UTC hours.
-  const end = Math.floor(now / HOUR) * HOUR;
+export function rollingHour(end) {
+  if (!Number.isFinite(end)) throw new Error('Expected the latest PM2.5 timestamp');
   return { start: end - HOUR, end };
 }
 

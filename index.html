@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="theme-color" content="#f7f8fa">
   <meta name="description" content="ค่าฝุ่น PM2.5 และอุณหภูมิจาก QDRR พร้อมการประเมินรายชั่วโมงตามเกณฑ์ยุโรป ไม่ใช่เกณฑ์ประเทศไทย">
-  <title>QDRR · คุณภาพอากาศ</title>
+  <title>คุณภาพอากาศที่ QDRR</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Google+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -16,17 +16,16 @@
   <a class="skip-link" href="#report">ข้ามไปยังรายงาน</a>
   <main>
     <header class="page-header">
-      <h1>QDRR · คุณภาพอากาศ</h1>
-      <a href="https://io.adafruit.com/srakrn/dashboards/qdrr-air-quality">แดชบอร์ดต้นฉบับ ↗</a>
+      <h1>คุณภาพอากาศที่ QDRR</h1>
     </header>
 
     <section id="report" class="report" aria-labelledby="report-heading" tabindex="-1">
-      <h2 id="report-heading">เกณฑ์คุณภาพอากาศยุโรป (European AQI) — ไม่ใช่เกณฑ์ประเทศไทย</h2>
+      <h2 id="report-heading">คุณภาพอากาศ <span class="report-standard">(ตามเกณฑ์ European AQI)</span></h2>
       <div class="report-result" role="status" aria-live="polite" aria-atomic="true">
         <p id="category" class="category">กำลังโหลดข้อมูลรายชั่วโมง…</p>
         <p id="assessment-value" class="assessment-value"></p>
       </div>
-      <p id="assessment-period">ประเมินชั่วโมงที่สิ้นสุดแล้วล่าสุด · เวลาไทย (UTC+7)</p>
+      <p id="assessment-period">ประเมินย้อนหลัง 1 ชั่วโมงจากข้อมูล PM2.5 ล่าสุด</p>
       <p id="assessment-status" class="data-status"></p>
       <p class="report-note">ประเมินเฉพาะ PM2.5 จากค่าเฉลี่ยรายชั่วโมงโดยประมาณ ไม่ใช่ดัชนีรวมทุกมลพิษหรือผลประเมินอย่างเป็นทางการของ EEA</p>
     </section>
@@ -68,7 +67,7 @@
       <p class="method-note">สีพื้นกราฟแสดงช่วงความเข้มข้นตามเกณฑ์ยุโรป จุดบนกราฟเป็นค่าที่รายงานในแต่ละเวลา ไม่ใช่ผลประเมินรายชั่วโมง</p>
       <details>
         <summary>วิธีคำนวณและข้อจำกัดของข้อมูล</summary>
-        <p>ค่าเฉลี่ยของชั่วโมงที่สิ้นสุดแล้วล่าสุดคำนวณแบบถ่วงน้ำหนักตามเวลา ใช้ค่าแต่ละจุดต่อไปจนถึงจุดถัดไป แต่ไม่เกิน 10 นาที และจัดระดับเมื่อมีข้อมูลครอบคลุมอย่างน้อย 75% ของชั่วโมง โดยเฉลี่ยเฉพาะช่วงที่มีข้อมูล เกณฑ์ความครอบคลุมนี้เป็นกติกาของแดชบอร์ด ไม่ใช่ข้อกำหนดของ EEA</p>
+        <p>ใช้เกณฑ์ PM2.5 ของยุโรป ไม่ใช่เกณฑ์ประเทศไทย ค่าเฉลี่ยย้อนหลัง 1 ชั่วโมงนับถึงเวลาของข้อมูล PM2.5 ล่าสุด คำนวณแบบถ่วงน้ำหนักตามเวลา ใช้ค่าแต่ละจุดต่อไปจนถึงจุดถัดไป แต่ไม่เกิน 10 นาที และจัดระดับเมื่อมีข้อมูลครอบคลุมอย่างน้อย 75% ของชั่วโมง โดยเฉลี่ยเฉพาะช่วงที่มีข้อมูล ช่วงเวลาแบบเลื่อนและเกณฑ์ความครอบคลุมนี้เป็นกติกาของแดชบอร์ด ไม่ใช่ข้อกำหนดของ EEA</p>
         <p>ข้อมูลจากเซนเซอร์อาจคลาดเคลื่อนหรือขาดช่วง เวลาของค่าล่าสุดคือเวลาที่ Adafruit IO บันทึกข้อมูล ไม่ใช่เวลาที่เปิดหน้านี้ หากไม่มีข้อมูลใหม่ หน้านี้จะแสดงค่าเดิมพร้อมเวลาที่บันทึก</p>
         <p>ค่าล่าสุดตรวจสอบทุก 1 นาที กราฟตรวจสอบทุก 5 นาทีขณะเปิดหน้านี้อยู่ การดึงข้อมูลขึ้นอยู่กับการให้บริการและข้อจำกัดของ Adafruit IO เวลาแสดงเป็นเวลาไทย (UTC+7)</p>
       </details>

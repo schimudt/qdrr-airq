@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { category, parseReading, normaliseRecords, previousHour, hourlyEstimate, MINUTE, HOUR } from '../src/quality.js';
+import { category, parseReading, normaliseRecords, rollingHour, hourlyEstimate, MINUTE, HOUR } from '../src/quality.js';
 
 const start = Date.parse('2026-11-15T02:00:00Z');
 const window = { start, end: start + HOUR };
@@ -29,11 +29,22 @@ test('normalisation sorts, filters invalid values and deduplicates timestamps', 
   ]);
 });
 
-test('previous complete Bangkok hour works at midnight and exactly on the hour', () => {
-  assert.deepEqual(previousHour(Date.parse('2026-11-15T00:35:00+07:00')), {
-    start: Date.parse('2026-11-14T23:00:00+07:00'), end: Date.parse('2026-11-15T00:00:00+07:00'),
+test('rolling hour ends at the last reading, including minutes, seconds and midnight', () => {
+  assert.deepEqual(rollingHour(Date.parse('2026-11-15T00:35:42+07:00')), {
+    start: Date.parse('2026-11-14T23:35:42+07:00'), end: Date.parse('2026-11-15T00:35:42+07:00'),
   });
-  assert.deepEqual(previousHour(window.end), window);
+  assert.deepEqual(rollingHour(window.end), window);
+  assert.throws(() => rollingHour(undefined), /timestamp/);
+});
+
+test('rolling estimate uses the sensor timestamp rather than a complete clock hour', () => {
+  const latestTime = start + 65 * MINUTE;
+  const records = [0, 10, 20, 30, 40, 50, 60, 65].map(minute => record(minute, minute < 30 ? 10 : 30));
+  const result = hourlyEstimate(records, rollingHour(latestTime));
+  assert.equal(result.start, start + 5 * MINUTE);
+  assert.equal(result.end, latestTime);
+  assert.equal(result.coverage, 1);
+  assert.equal(result.value, (25 * 10 + 35 * 30) / 60);
 });
 
 test('hourly mean uses elapsed time rather than sample count', () => {

@@ -1,4 +1,4 @@
-import { BANDS, MINUTE, parseReading, previousHour, hourlyEstimate } from './quality.js';
+import { BANDS, MINUTE, parseReading, rollingHour, hourlyEstimate } from './quality.js';
 import { FEEDS, latest, history, hourRecords } from './api.js';
 import { Poller } from './polling.js';
 import { renderChart } from './charts.js';
@@ -29,6 +29,7 @@ function errorText(error, retained = false) {
 }
 
 const poller = new Poller();
+let latestPM = null;
 for (const [key, feed] of Object.entries(FEEDS)) {
   let reading = null;
   let chartLoaded = false;
@@ -48,6 +49,10 @@ for (const [key, feed] of Object.entries(FEEDS)) {
     const point = parseReading(records[0], { pm: key === 'pm' });
     if (!point || point.time > Date.now() + MINUTE) throw new Error('No valid latest reading');
     reading = point;
+    if (key === 'pm') {
+      latestPM = point;
+      if (lastAssessment?.end !== point.time && assessmentJob.failures === 0) assessmentJob.due = 0;
+    }
     $(`${key}-value`).textContent = number.format(point.value);
     $(`${key}-time`).textContent = `บันทึก ${time.format(point.time)} น.`;
     $(`${key}-status`).textContent = '';
@@ -76,21 +81,22 @@ for (const [key, feed] of Object.entries(FEEDS)) {
 
 let lastAssessment = null;
 let assessedAt = 0;
-poller.add(async () => {
-  const window = previousHour();
+const assessmentJob = poller.add(async () => {
+  if (!latestPM) return;
+  const window = rollingHour(latestPM.time);
   if (lastAssessment?.end === window.end && Date.now() - assessedAt < 5 * MINUTE) return;
   const records = await hourRecords(FEEDS.pm, window);
   const result = hourlyEstimate(records, window);
   lastAssessment = result;
   assessedAt = Date.now();
-  $('assessment-period').textContent = `${time.format(result.start).replace(/:\d{2}$/, '')}–${clock.format(result.end)} น. · เวลาไทย · ข้อมูลครอบคลุม ${Math.round(result.coverage * 100)}%`;
+  $('assessment-period').textContent = `${time.format(result.start).replace(/:\d{2}$/, '')}–${clock.format(result.end)} น.`;
   $('assessment-status').textContent = '';
   $('report').style.setProperty('--quality-color', result.band?.color ?? '#8b939d');
   if (result.band) {
     $('category').textContent = `${result.band.thai} (${result.band.english})`;
     // Extra precision avoids displaying a boundary value beside the next category.
     const formatted = new Intl.NumberFormat('en', { maximumFractionDigits: 3 }).format(result.value);
-    $('assessment-value').textContent = `PM2.5 เฉลี่ยรายชั่วโมงโดยประมาณ ${formatted} µg/m³`;
+    $('assessment-value').textContent = `PM2.5 เฉลี่ยย้อนหลัง 1 ชั่วโมงโดยประมาณ ${formatted} µg/m³`;
   } else {
     $('category').textContent = 'ข้อมูลไม่เพียงพอสำหรับจัดระดับรายชั่วโมง';
     $('assessment-value').textContent = 'ต้องมีข้อมูลครอบคลุมอย่างน้อย 75% ของชั่วโมง';
@@ -103,10 +109,10 @@ poller.add(async () => {
   }
 });
 
-// Old assessments remain timestamped but are not presented as the current hour's result.
+// Keep the previous result timestamped while a newer sensor-anchored window loads.
 function markOlderAssessment() {
-  if (lastAssessment && lastAssessment.end !== previousHour().end) {
-    $('assessment-status').textContent = 'ผลประเมินของชั่วโมงก่อนหน้า · กำลังรอข้อมูลสำหรับชั่วโมงล่าสุด';
+  if (lastAssessment && latestPM && lastAssessment.end !== latestPM.time && assessmentJob.failures === 0) {
+    $('assessment-status').textContent = 'กำลังปรับผลประเมินตามข้อมูล PM2.5 ล่าสุด';
   }
 }
 
