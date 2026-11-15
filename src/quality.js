@@ -3,12 +3,12 @@ export const HOUR = 60 * MINUTE;
 export const MAX_HOLD = 10 * MINUTE;
 export const MIN_COVERAGE = 0.75;
 export const BANDS = [
-  { max: 5, thai: 'ดี', english: 'Good', color: '#50f0e6', range: '0–5' },
-  { max: 15, thai: 'พอใช้', english: 'Fair', color: '#50ccaa', range: '>5–15' },
-  { max: 50, thai: 'ปานกลาง', english: 'Moderate', color: '#f0e641', range: '>15–50' },
-  { max: 90, thai: 'ไม่ดี', english: 'Poor', color: '#ff5050', range: '>50–90' },
-  { max: 140, thai: 'ไม่ดีมาก', english: 'Very poor', color: '#960032', range: '>90–140' },
-  { max: Infinity, thai: 'ไม่ดีอย่างยิ่ง', english: 'Extremely poor', color: '#7d2181', range: '>140' },
+  { max: 5, thai: 'ดี', english: 'Good', color: '#52C7C0', range: '0–5' },
+  { max: 15, thai: 'พอใช้', english: 'Fair', color: '#8DC97E', range: '>5–15' },
+  { max: 50, thai: 'ปานกลาง', english: 'Moderate', color: '#E8CF4A', range: '>15–50' },
+  { max: 90, thai: 'ไม่ดี', english: 'Poor', color: '#E97952', range: '>50–90' },
+  { max: 140, thai: 'ไม่ดีมาก', english: 'Very poor', color: '#A63864', range: '>90–140' },
+  { max: Infinity, thai: 'ไม่ดีอย่างยิ่ง', english: 'Extremely poor', color: '#633D80', range: '>140' },
 ];
 
 export function category(value) {

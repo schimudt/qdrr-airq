@@ -43,16 +43,16 @@ Requests are independent, have 20-second timeouts and never overlap for the same
 
 ## European PM2.5 categories — not Thai criteria
 
-Reference: [EEA European Air Quality Index methodology](https://airindex.eea.europa.eu/AQI/?webgl=0), checked November 15, 2026. Colours match EEA's published stylesheet.
+Reference: [EEA European Air Quality Index methodology](https://airindex.eea.europa.eu/AQI/?webgl=0), checked November 15, 2026. Thresholds follow EEA; colours use the custom SCHIMUDT palette below rather than EEA's official palette. SCHIMUDT red (#B20000) is reserved for branding.
 
 | Concentration (µg/m³) | Category | Colour |
 | --- | --- | --- |
-| 0–5 | ดี / Good | `#50f0e6` |
-| >5–15 | พอใช้ / Fair | `#50ccaa` |
-| >15–50 | ปานกลาง / Moderate | `#f0e641` |
-| >50–90 | ไม่ดี / Poor | `#ff5050` |
-| >90–140 | ไม่ดีมาก / Very poor | `#960032` |
-| >140 | ไม่ดีอย่างยิ่ง / Extremely poor | `#7d2181` |
+| 0–5 | ดี / Good | `#52C7C0` |
+| >5–15 | พอใช้ / Fair | `#8DC97E` |
+| >15–50 | ปานกลาง / Moderate | `#E8CF4A` |
+| >50–90 | ไม่ดี / Poor | `#E97952` |
+| >90–140 | ไม่ดีมาก / Very poor | `#A63864` |
+| >140 | ไม่ดีอย่างยิ่ง / Extremely poor | `#633D80` |
 
 EEA publishes bands using whole-number ranges. This dashboard extends those as contiguous decimal intervals, with exact boundary values included in the lower category. Classification uses the unrounded mean. Thai labels are dashboard translations of the English categories.
 
