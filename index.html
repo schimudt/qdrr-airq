@@ -1,0 +1,84 @@
+<!doctype html>
+<html lang="th">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#f7f8fa">
+  <meta name="description" content="ค่าฝุ่น PM2.5 และอุณหภูมิจาก QDRR พร้อมการประเมินรายชั่วโมงตามเกณฑ์ยุโรป ไม่ใช่เกณฑ์ประเทศไทย">
+  <title>QDRR · คุณภาพอากาศ</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Google+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="./styles.css">
+  <script type="module" src="./src/app.js"></script>
+</head>
+<body>
+  <a class="skip-link" href="#report">ข้ามไปยังรายงาน</a>
+  <main>
+    <header class="page-header">
+      <h1>QDRR · คุณภาพอากาศ</h1>
+      <a href="https://io.adafruit.com/srakrn/dashboards/qdrr-air-quality">แดชบอร์ดต้นฉบับ ↗</a>
+    </header>
+
+    <section id="report" class="report" aria-labelledby="report-heading" tabindex="-1">
+      <h2 id="report-heading">เกณฑ์คุณภาพอากาศยุโรป (European AQI) — ไม่ใช่เกณฑ์ประเทศไทย</h2>
+      <div class="report-result" role="status" aria-live="polite" aria-atomic="true">
+        <p id="category" class="category">กำลังโหลดข้อมูลรายชั่วโมง…</p>
+        <p id="assessment-value" class="assessment-value"></p>
+      </div>
+      <p id="assessment-period">ประเมินชั่วโมงที่สิ้นสุดแล้วล่าสุด · เวลาไทย (UTC+7)</p>
+      <p id="assessment-status" class="data-status"></p>
+      <p class="report-note">ประเมินเฉพาะ PM2.5 จากค่าเฉลี่ยรายชั่วโมงโดยประมาณ ไม่ใช่ดัชนีรวมทุกมลพิษหรือผลประเมินอย่างเป็นทางการของ EEA</p>
+    </section>
+
+    <section class="readings" aria-label="ค่าที่เซนเซอร์รายงานล่าสุด">
+      <article class="reading">
+        <h2>PM2.5 ล่าสุด</h2>
+        <p class="reading-value"><span id="pm-value">—</span> <span class="unit">µg/m³</span></p>
+        <p id="pm-time" class="timestamp">กำลังโหลด…</p>
+        <p id="pm-status" class="data-status" role="status"></p>
+      </article>
+      <article class="reading">
+        <h2>อุณหภูมิล่าสุด</h2>
+        <p class="reading-value"><span id="temperature-value">—</span> <span class="unit">°C</span></p>
+        <p id="temperature-time" class="timestamp">กำลังโหลด…</p>
+        <p id="temperature-status" class="data-status" role="status"></p>
+      </article>
+    </section>
+
+    <div class="charts">
+      <section class="chart-panel" aria-labelledby="pm-chart-heading">
+        <h2 id="pm-chart-heading">PM2.5 ย้อนหลัง 24 ชั่วโมง</h2>
+        <div id="pm-chart" class="chart-container"><p>กำลังโหลดกราฟ…</p></div>
+        <p id="pm-chart-status" class="data-status" role="status"></p>
+      </section>
+      <section class="chart-panel" aria-labelledby="temperature-chart-heading">
+        <h2 id="temperature-chart-heading">อุณหภูมิย้อนหลัง 24 ชั่วโมง</h2>
+        <div id="temperature-chart" class="chart-container"><p>กำลังโหลดกราฟ…</p></div>
+        <p id="temperature-chart-status" class="data-status" role="status"></p>
+      </section>
+    </div>
+
+    <section class="reference" aria-labelledby="reference-heading">
+      <div class="reference-heading">
+        <h2 id="reference-heading">เกณฑ์ PM2.5 รายชั่วโมงของยุโรป</h2>
+        <a href="https://airindex.eea.europa.eu/AQI/?webgl=0">วิธีประเมินของ EEA ↗</a>
+      </div>
+      <ul id="legend" class="legend"></ul>
+      <p class="method-note">สีพื้นกราฟแสดงช่วงความเข้มข้นตามเกณฑ์ยุโรป จุดบนกราฟเป็นค่าที่รายงานในแต่ละเวลา ไม่ใช่ผลประเมินรายชั่วโมง</p>
+      <details>
+        <summary>วิธีคำนวณและข้อจำกัดของข้อมูล</summary>
+        <p>ค่าเฉลี่ยของชั่วโมงที่สิ้นสุดแล้วล่าสุดคำนวณแบบถ่วงน้ำหนักตามเวลา ใช้ค่าแต่ละจุดต่อไปจนถึงจุดถัดไป แต่ไม่เกิน 10 นาที และจัดระดับเมื่อมีข้อมูลครอบคลุมอย่างน้อย 75% ของชั่วโมง โดยเฉลี่ยเฉพาะช่วงที่มีข้อมูล เกณฑ์ความครอบคลุมนี้เป็นกติกาของแดชบอร์ด ไม่ใช่ข้อกำหนดของ EEA</p>
+        <p>ข้อมูลจากเซนเซอร์อาจคลาดเคลื่อนหรือขาดช่วง เวลาของค่าล่าสุดคือเวลาที่ Adafruit IO บันทึกข้อมูล ไม่ใช่เวลาที่เปิดหน้านี้ หากไม่มีข้อมูลใหม่ หน้านี้จะแสดงค่าเดิมพร้อมเวลาที่บันทึก</p>
+        <p>ค่าล่าสุดตรวจสอบทุก 1 นาที กราฟตรวจสอบทุก 5 นาทีขณะเปิดหน้านี้อยู่ การดึงข้อมูลขึ้นอยู่กับการให้บริการและข้อจำกัดของ Adafruit IO เวลาแสดงเป็นเวลาไทย (UTC+7)</p>
+      </details>
+    </section>
+
+    <footer>
+      <p>ค่าฝุ่น PM2.5 และอุณหภูมิ วัดจากการวางเซนเซอร์ IKEA VINDSTYRKA (Sensirion SEN54) ไว้กลางแจ้ง · ข้อมูลจาก <a href="https://io.adafruit.com/srakrn/dashboards/qdrr-air-quality">Adafruit IO</a></p>
+      <p class="disclaimer">ข้อปฏิเสธความรับผิดชอบ: ข้อมูลนี้ให้บริการในลักษณะรับสภาพ (as-is) ปราศจากพันธะผูกพัน การรับประกัน และ/หรือการการันตี ผู้ใช้ข้อมูลต้องยอมรับความเสี่ยงในความผิดพลาดของข้อมูล และความเสียหายที่เกิดจากการตัดสินใจในการใช้ข้อมูลด้วยตัวเอง</p>
+    </footer>
+    <noscript><p class="noscript">ต้องเปิด JavaScript เพื่อดึงข้อมูลจาก Adafruit IO และแสดงกราฟ</p></noscript>
+  </main>
+</body>
+</html>
