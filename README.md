@@ -13,7 +13,7 @@ npm run dev
 
 Open http://127.0.0.1:5173. The page requires an internet connection for live Adafruit data and Google Fonts. The layout and fallback font work if Google Fonts is unavailable.
 
-`npm run build` copies only the public HTML, CSS and JavaScript into `_site/`. Preview that output with `python3 -m http.server 5173 --directory _site --bind 127.0.0.1`.
+`npm run build` copies only the public HTML, CSS, JavaScript and logo assets into `_site/`. Preview that output with `python3 -m http.server 5173 --directory _site --bind 127.0.0.1`.
 
 ## GitHub Pages
 

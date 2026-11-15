@@ -16,14 +16,15 @@ a { color: #245a9c; text-underline-offset: 3px; }
 a:hover { text-decoration-thickness: 2px; }
 :focus-visible { outline: 3px solid #245a9c; outline-offset: 5px; }
 .page-header, .reference-heading { display: flex; align-items: baseline; justify-content: space-between; gap: 12px 24px; flex-wrap: wrap; }
-.page-header { margin-bottom: 28px; }
+.page-header { margin-bottom: 28px; align-items: center; }
+.powered-by { display: flex; align-items: center; gap: 10px; font-size: 14px; color: var(--muted); white-space: nowrap; }
+.powered-by img { display: block; width: 161px; height: 22px; }
 .report { padding: 25px 28px; background: #fff; border: 1px solid var(--border); border-left: 6px solid var(--quality-color, #8b939d); }
 .report h2 { font-size: 18px; font-weight: 600; }
 .report-standard { font-size: 0.8em; font-weight: 400; }
 .category { margin-top: 15px; font-size: clamp(28px, 3.4vw, 43px); font-weight: 600; line-height: 1.4; overflow-wrap: anywhere; }
 .assessment-value { margin: 6px 0; font-size: 20px; }
 #assessment-period { color: var(--muted); }
-.report-note { margin-top: 12px; font-size: 14px; color: var(--muted); max-width: 950px; }
 .readings { display: grid; grid-template-columns: 1fr 1fr; margin: 26px 0 30px; border-bottom: 1px solid var(--border); }
 .reading { padding: 0 0 23px; }
 .reading + .reading { border-left: 1px solid var(--border); padding-left: 30px; }
@@ -50,9 +51,6 @@ a:hover { text-decoration-thickness: 2px; }
 .legend li { border-top: 6px solid var(--band); padding-top: 9px; font-size: 15px; }
 .legend span { display: block; color: var(--muted); font-size: 13px; }
 .method-note { font-size: 14px; color: var(--muted); }
-details { margin-top: 14px; }
-summary { cursor: pointer; color: #245a9c; }
-details p { margin-top: 10px; max-width: 960px; }
 footer { margin-top: 25px; padding-top: 20px; border-top: 1px solid var(--border); color: var(--muted); font-size: 14px; }
 .disclaimer { font-size: 12px; margin-top: 12px; line-height: 1.8; }
 .noscript { padding: 20px; color: #944013; }
@@ -60,7 +58,9 @@ footer { margin-top: 25px; padding-top: 20px; border-top: 1px solid var(--border
 .skip-link:focus { top: 12px; }
 @media (max-width: 760px) {
   main { padding: 22px 18px; }
-  .page-header { margin-bottom: 20px; }
+  .page-header { margin-bottom: 20px; flex-direction: column; align-items: flex-start; gap: 8px; }
+  .powered-by { font-size: 13px; }
+  .powered-by img { width: 147px; height: 20px; }
   h1 { font-size: 22px; }
   .report { padding: 20px 18px; }
   .report h2 { font-size: 16px; }

@@ -5,7 +5,7 @@ const root = new URL('../', import.meta.url);
 const output = new URL('_site/', root);
 await rm(output, { recursive: true, force: true });
 await mkdir(output, { recursive: true });
-for (const path of ['index.html', 'styles.css', 'src']) {
+for (const path of ['index.html', 'styles.css', 'src', 'assets']) {
   await cp(new URL(path, root), new URL(path, output), { recursive: true });
 }
 console.log(`Static site built at ${fileURLToPath(output)}`);
